@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Trainee Management</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<style>
+		.header {
+			background-color: black;
+			color: white;
+			padding: 10px;
+			text-align: center;
+			width: 100%;
+			position: relative;
+			top: 0;
+			left: 0;
+		}
+
+		.form-container {
+			max-width: 600px;
+			margin: auto;
+		}
+
+		.form-group {
+			margin-bottom: 15px;
+		}
+
+		.table {
+			margin-top: 30px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="header">
+		<h1>Trainee Management</h1>
+	</div>
+
+	<div class="container">
+		<div class="form-container">
+			<h2 class="mt-4">Add Trainee Details</h2>
+			<form th:action="@{/trainees/save}" method="post" th:object="${trainee}">
+				<div class="form-group">
+					<label for="firstName">First Name:</label>
+					<input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+				</div>
+				<div class="form-group">
+					<label for="lastName">Last Name:</label>
+					<input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" class="form-control" id="email" th:field="*{email}" required>
+				</div>
+				<div class="form-group">
+					<label for="gender">Gender:</label>
+					<select class="form-control" id="gender" th:field="*{gender}" required>
+						<option value="" disabled selected>Select Gender</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="phone">Phone:</label>
+					<input type="text" class="form-control" id="phone" th:field="*{phone}" required>
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-primary">Add Trainee</button>
+				</div>
+			</form>
+		</div>
+
+		<h2 class="mt-5 text-center">Trainee List</h2>
+		<table class="table table-bordered mt-3">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Gender</th>
+					<th>Phone</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="trainee : ${trainees}">
+					<td th:text="${trainee.id}"></td>
+					<td th:text="${trainee.firstName}"></td>
+					<td th:text="${trainee.lastName}"></td>
+					<td th:text="${trainee.email}"></td>
+					<td th:text="${trainee.gender}"></td>
+					<td th:text="${trainee.phone}"></td>
+					<td>
+						<a th:href="@{/trainees/edit/{id}(id=${trainee.id})}" class="btn btn-warning">Edit</a>
+						<form th:action="@{/trainees/delete/{id}(id=${trainee.id})}" method="post"
+							style="display:inline;">
+							<input type="hidden" name="_method" value="delete">
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>
