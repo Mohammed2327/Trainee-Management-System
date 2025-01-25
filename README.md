@@ -9,4 +9,4 @@ Clone this repository in your loacal machine.
 
 Do the necessary changes in the application properties such as adding your Database name, Username and Password.
 
-### Then you run you application through spring boot.
+### Then you cn run your application through spring boot.
